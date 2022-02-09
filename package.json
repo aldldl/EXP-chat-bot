@@ -1,0 +1,17 @@
+{
+  "name": "expchat-bot",
+  "version": "1.0.0",
+  "description": "Chat Bot for Discord-Server and Server-Discord live chat",
+  "main": "chat-bot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ALo",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^13.6.0",
+    "dotenv": "^12.0.3",
+    "rcon-client": "^4.2.3",
+    "read-last-lines": "^1.8.0"
+  }
+}
