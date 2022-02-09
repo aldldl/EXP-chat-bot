@@ -190,7 +190,7 @@ let s3File= `/home/factorio/servers/eu-03/console.log`;
 console.log(`Watching for file changes on ${s1File}`);
 console.log(`Watching for file changes on ${s3File}`);
 
-const removeChar = {'`':'\`',"'":'\'','"':'\"','\n':'','\\':'_','/':'nocmd/'};
+const removeChar = {'`':'_',"'":"\'",'"':'\"','\n':'','\\':'_','/':'nocmd/'};
 
 fs.watch(s1File, (event, chatfrom1) => {
   if (chatfrom1) {
@@ -207,13 +207,32 @@ fs.watch(s3File, (event, chatfrom3) => {
     if (chatfrom3) {
       readLastLines.read(s3File, 1)
           //.then((lines) => client.channels.cache.get('940779788103213056').send(`\`\`\``+lines.replace(/[\`'"\n\\/]/g, m => removeChar[m])+`\`\`\``));
-          .then((lines) => client.channels.cache.get('940779788103213056').send(`\`\`\``+lines.replace(/[\`'"\n\\/]/g, m => removeChar[m])+`\`\`\``));
+          .then((lines) => webhooksend(s3File,lines));
+    //  webhooksend(s3File, lines)
       
-      
-      console.log(`${chatfrom3} file Changed`);
-  }
+      console.log(`${chatfrom3} File Changed`);
+        async function webhooksend(s3File, lines)
+        
+        {
+            let webhooks = await client.channels.cache.get('940714357480906762').fetchWebhooks();
+            let webhook = webhooks.first();
+            let webName = lines.split(" ")
+            await webhook.send({
+                content: `\`\`\``+lines.replace(/[\`'"\n\\/]/g, m => removeChar[m])+`\`\`\``,
+                username: `S3:${webName[3]}`,
+                avatarURL: 'https://i.imgur.com/vLqz2gS.png',
+                threadId: '940779788103213056',
+    });
+        }
+        
+  
+  
+  
+    }
   });
 
+
+//OG replace code - first draft
 
 // items to replace
 // stringRemove = string.replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, '');
